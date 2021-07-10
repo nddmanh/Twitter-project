@@ -11,6 +11,12 @@ nav {
 
 .main-nav {
     display: flex;
+    justify-content: flex-end;
+}
+
+.left-heaeder {
+    width: 50%;
+    display: flex;
     justify-content: space-between;
 }
 

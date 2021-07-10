@@ -11,9 +11,13 @@ nav {
 
 .main-nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
-
+/* .the {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+} */
 h1.logo  {
     font-size: var(--fs-large);
 }

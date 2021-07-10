@@ -29,3 +29,9 @@ textarea.content {
 .form .btn {
     align-self: flex-end;
 }
+
+.error-message {
+    margin-bottom: 1.5rem;
+    color: var(--color-light-red);
+    text-transform: capitalize;
+}

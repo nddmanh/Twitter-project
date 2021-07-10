@@ -1,49 +1,111 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
+import AppContext from './AppContext';
 
-export default function PostItem() {
+export default function PostItem({ post }) {
+  const { dispatch } = useContext(AppContext);
+  const [postToEdit, setPostToEdit] = useState(post);
+  const [openEditForm, setOpenEditForm] = useState(false);
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
+  const updatePost = async () => {
+    try {
+      setOpenEditForm(false);
+      const token = localStorage.getItem("token");
+      const option = {
+        method: "put",
+        url: `/api/v1/posts/${post._id}`,
+        data: postToEdit,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      await axios(option);
+      dispatch({
+        type: "UPDATE_ONE_POST",
+        payload: { ...postToEdit },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deletePost = async () => {
+    try {
+      setOpenDeleteConfirm(false);
+      const token = localStorage.getItem("token");
+      const option = {
+        method: "delete",
+        url: `/api/v1/posts/${post._id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      await axios(option);
+      dispatch({
+        type: "DELETE_ONE_POST",
+        payload: { ...post },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  let date = new Date(post.createdAt);
+  
   return (
     <div className="post-item">
-      <p className="post-content">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque, cumque
-        molestiae? Expedita cumque sunt rerum ipsa eos consequuntur porro
-        accusamus. Provident consequuntur qui libero asperiores similique rerum
-        numquam doloremque suscipit.
-      </p>
+      <p className="post-content">{post.content}</p>
       <div className="post-footer">
         <div className="post-infors">
-          <span>Duc Manh</span>
-          <span>Date: 10/7/2021</span>
+          <span>By {post.author.name}</span>
+          <span>
+            {" "}
+            Date: 
+            {` ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
+          </span>
         </div>
-        <div className="post-edit-delete">
-          <span>Edit</span>
-          <span>Delete</span>
-          <span className="delete-question">Are you sure?</span>
-          <span>Yes</span>
-          <span>No</span>
-        </div>
-      </div>
-      <div className="post-edit-form">
-        <form className="edit-form">
-          <textarea
-            name="content"
-            type="text"
-            id="content"
-            className="content"
-            placeholder="What's happending?"
-            defaultValue={
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis quidem maiores eaque consequuntur magni, quo ducimus, doloremque repudiandae quis ut voluptas dolorum sed omnis nisi suscipit? Dolore recusandae consectetur iure.\n                            "
-            }
-          />
-          <div className="btn-container">
-            <button className="btn" type="button">
-              Update
-            </button>
-            <button className="btn" type="button">
-              Cancle
-            </button>
+        {post.isEditable && (
+          <div className="post-edit-delete">
+            {openDeleteConfirm ? (
+                <>
+                  <span className="delete-question">Are you sure?</span>
+                  <span onClick={() => deletePost()}>Yes</span>
+                  <span onClick={() => setOpenDeleteConfirm(false)}>No</span>
+                </>
+              ) : (
+                <>
+                  <span  onClick={() => setOpenEditForm(true)}>Edit</span>
+                  <span  onClick={() => setOpenDeleteConfirm(true)}>Delete</span>
+                </> 
+              )}
           </div>
-        </form>
+        )}
       </div>
+      {openEditForm && (
+        <div className="post-edit-form">
+          <form className="edit-form">
+            <textarea
+              name="content"
+              type="text"
+              id="content"
+              className="content"
+              placeholder="What's happending?"
+              value={postToEdit.content}
+              onChange={(e) => 
+                setPostToEdit({ ...postToEdit, content: e.target.value })
+              }
+            />
+            <div className="btn-container">
+              <button className="btn" type="button" onClick={() => updatePost()} >
+                Update
+              </button>
+              <button className="btn" type="button" onClick={() => setOpenEditForm(false)} >
+                Cancle
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+      
     </div>
   )
 }
