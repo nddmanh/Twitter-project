@@ -45,7 +45,7 @@ body {
 
     font-family: inherit;
     font-size: var(--fs-medium);
-    font-weight: 700;
+    font-weight: bold;
 
     cursor: pointer;
     transition: all 0.3s;

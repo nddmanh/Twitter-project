@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="post.css">
+    <link rel="stylesheet" href="auth.css">
+    <title>Twiiter</title>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER  -->
+        <header class="header">
+            <h1 class="logo"><a href="/">Twitter</a></h1>
+            <nav>
+                <ul class="main-nav">
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                    <li><span href="#" class="user-name">Hello, Duc Manh</span></li>
+                    <li><a href="#">Sign Out</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- FORM -->
+        <section class="form-section">
+            <form action="" class="form">
+                <textarea name="content" type="text" id="content" class="content" placeholder="What's happending?"></textarea>
+                <button class="btn" type="button">Tweet</button>
+            </form>
+        </section>
+
+        <!-- POST  -->
+        <section class="post-section">
+            <div class="post-list">
+                <div class="post-item">
+                    <p class="post-content">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque, cumque molestiae? Expedita cumque sunt rerum ipsa eos consequuntur porro accusamus. Provident consequuntur qui libero asperiores similique rerum numquam doloremque suscipit.
+                    </p>
+                    <div class="post-footer">
+                        <div class="post-infors">
+                            <span>Duc Manh</span>
+                            <span>Date: 10/7/2021</span>
+                        </div>
+                        <div class="post-edit-delete">
+                            <span>Edit</span>
+                            <span>Delete</span>
+                            <span class="delete-question">Are you sure?</span>
+                            <span>Yes</span>
+                            <span>No</span>
+                        </div>
+                    </div>
+                    <div class="post-edit-form">
+                        <form class="edit-form">
+                            <textarea name="content" type="text" id="content" class="content" placeholder="What's happending?">Lorem ipsum dolor sit amet consectetur       adipisicing elit. Blanditiis quidem maiores eaque consequuntur magni, quo ducimus, doloremque repudiandae quis ut voluptas dolorum sed omnis nisi suscipit? Dolore recusandae consectetur iure.
+                            </textarea>
+                            <div class="btn-container">
+                                <button class="btn" type="button">Update</button>
+                                <button class="btn" type="button">Cancle</button>
+                            </div>                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOGIN -->
+        <section class="auth-container">
+            <form class="auth-form">
+                <h2>Enter yout account</h2>
+                <div class="error-message">
+                    Error: Your password is not correct
+                </div>
+                <input id="" type="email" name="email" placeholder="Email" required />
+                <input id="" type="password" name="password" placeholder="Password" required />
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </section>
+        
+        <!-- REGISTER -->
+        <section class="auth-container">
+            <form class="auth-form">
+                <h2>Enter yout account</h2>
+                <div class="error-message">
+                    Error: Your password is not correct
+                </div>
+                <input id="" type="name" name="name" placeholder="Name" required />
+                <input id="" type="email" name="email" placeholder="Email" required />
+                <input id="" type="password" name="password" placeholder="Password" required />
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
