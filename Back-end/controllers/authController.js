@@ -9,7 +9,9 @@ exports.register = async (req, res, next) => {
         res.status(200).json({
             status: 'success',
             data: { 
-                token, userName: user.name 
+                token, 
+                userName: user.name, 
+                userId : user._id
             }
         })
     } catch (error) {
@@ -30,7 +32,11 @@ exports.login = async (req, res, next) => {
             const token = jwt.sign({userId: user._id}, process.env.APP_SECRET);
             res.status(200).json({
                 status: 'success',
-                data: { token, userName: user.name }
+                data: {
+                    token, 
+                    userName: user.name, 
+                    userId : user._id 
+                }
             })
         } else {
             // Error: Password is not correct
@@ -48,7 +54,7 @@ exports.getCurrentUser = async (req, res, next) => {
         const data = { user: null };
         if (req.user) {
             const user = await User.findOne({ _id: req.user.userId });
-            data.user = { userName: user.name }
+            data.user = { userName: user.name, userId : user._id }
         }
         res.status(200).json({
             status: 'success',

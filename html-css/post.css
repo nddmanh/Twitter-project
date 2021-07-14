@@ -7,9 +7,11 @@
     padding: 1rem;
     background-color: var(--color-medium-blue);
 }
-
+.post-content {
+    margin-bottom: 2rem;
+}
 .post-footer {
-    margin-top: 3rem;
+    margin-top: 7rem;
     display: flex;
     justify-content: space-between;
 }
@@ -47,3 +49,4 @@ form.edit-form textarea.content {
 form.edit-form .btn-container{
     align-self: flex-end;
 }
+

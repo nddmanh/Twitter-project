@@ -35,6 +35,7 @@ export default function PostList() {
     }
   });
 
+  
   return (
     <section className="post-section">
       <div className="post-list">

@@ -55,3 +55,66 @@ exports.deleteOnePost = async (req, res, next) => {
         next(error);
     }
 };
+
+// Count the like
+exports.getCountLike = async (req, res, next) => {
+    try {
+        const { postId } = req.params;
+
+        const post = await Post.findById(postId);
+        const userLike = post.userIdLike;
+        res.status(200).json({
+            status: 'success',
+            data: { userLike }
+        })
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Like One Post
+exports.likeOnePost = async (req, res, next) => {
+    try {
+        const { postId } = req.params;
+        const { userId } = req.user;
+
+        const post = await Post.findByIdAndUpdate(postId,
+            { "$addToSet": { "userIdLike": userId } },
+            { new: true, runValidator: true },
+            function (err, managerparent) {
+                if (err) throw err;
+            }
+        );
+
+        res.status(200).json({
+            status: 'success',
+            data: {post}
+        })
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Unlike One Post
+exports.unlikeOnePost = async (req, res, next) => {
+    try {
+        const { postId } = req.params;
+        const { userId } = req.user;
+
+        const post = await Post.findByIdAndUpdate(postId,
+            { "$pull": { "userIdLike": userId } },
+            { new: true, runValidator: true },
+            function (err, managerparent) {
+                if (err) throw err;
+            }
+        );
+
+        res.status(200).json({
+            status: 'success',
+            data: {post}
+        })
+    } catch (error) {
+        next(error);
+    }
+};
+

@@ -24,6 +24,7 @@ export default function Header() {
               <li>
                 <span href="#" className="user-name">
                 Hello, {user.userName}
+                {/* Hello, {user.userId} */}
                 </span>
               </li>
               <li onClick={ () => signOut() }>

@@ -7,7 +7,9 @@
     padding: 1rem;
     background-color: var(--color-medium-blue);
 }
-
+.post-content {
+    margin-bottom: 2rem;
+}
 .post-footer {
     margin-top: 3rem;
     display: flex;
@@ -44,9 +46,55 @@ form.edit-form textarea.content {
     color: black;
 }
 
-form.edit-form .btn-container {
+form.edit-form .btn-container{
     align-self: flex-end;
 }
-form.edit-form .btn-container button:not(:last-child) {
-    margin-right: 1rem;
+
+
+/* Like button post  */
+.btn-react {
+  padding: 0 1rem;
+  color: gray;
+  background-color: var(--color-light-gray);
+  border: 1px solid var(--color-dark-blue);
+  border-radius: 3px;
+
+  font-family: inherit;
+  font-size: var(--fs-medium);
+  font-weight: bold;
+
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  box-shadow: var(--color-light-blue) 0px 3px 0px;
+}
+
+.btn-react:hover {
+  color: black;
+  background-color: var(--color-light-red);
+  box-shadow: var(--color-light-blue) 0px 0px 0px;
+  transform: translateY(2px);
+}
+
+.btn-react-active {
+  padding: 0 1rem;
+  color: inherit;
+  background-color: var(--color-light-red);
+  border: 1px solid var(--color-light-gray);
+  border-radius: 3px;
+
+  font-family: inherit;
+  font-size: var(--fs-medium);
+  font-weight: bold;
+
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  box-shadow: var(--color-light-blue) 0px 3px 0px;
+}
+.btn-react-active:hover {
+  color: black;
+  background-color: var(--color-light-blue);
+  box-shadow: var(--color-light-blue) 0px 0px 0px;
+  transform: translateY(2px);
 }

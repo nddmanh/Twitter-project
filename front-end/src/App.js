@@ -23,8 +23,8 @@ function App() {
       };
       const response = await axios(option);
       if (response.data.data.user) {
-        const { userName } = response.data.data.user;
-        dispatch({ type: "CURRENT_USER", payload: { userName } })
+        const { userName, userId } = response.data.data.user;
+        dispatch({ type: "CURRENT_USER", payload: { userName, userId } })
       }
     } catch (error) {
       console.log(error);

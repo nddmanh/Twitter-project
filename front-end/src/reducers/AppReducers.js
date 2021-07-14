@@ -20,6 +20,13 @@ export default function reducer(state, action) {
         ...state,
         posts: state.posts.filter((post) => post._id !== action.payload._id ),
       };
+      
+    case "GET_COUNT_LIKE":
+      return { ...state, likes: action.payload };
+    case "LIKE_ONE_POST":
+      return { ...state, likes: action.payload };
+    case "UNLIKE_ONE_POST":
+      return { ...state, likes: action.payload };
   
     default:
       return state;

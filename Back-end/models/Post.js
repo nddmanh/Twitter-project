@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
+    userIdLike: {type: Array, default: null},
     content: {type: String, required: [true, 'Post have must content.'], trim: true },
     author: {
         type: mongoose.Schema.Types.ObjectId,

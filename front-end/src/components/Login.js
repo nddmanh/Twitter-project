@@ -21,9 +21,9 @@ export default function Login() {
         data: userInput,
       }
       const response = await axios(option);
-      const { token, userName } = response.data.data;
+      const { token, userName, userId } = response.data.data;
       localStorage.setItem("token", token);
-      dispatch({ type: "CURRENT_USER", payload: { userName } });
+      dispatch({ type: "CURRENT_USER", payload: { userName, userId } });
       history.push("/");
     } catch (error) {
       setErrorMessage(error.response.data.message);
