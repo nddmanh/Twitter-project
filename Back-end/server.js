@@ -11,6 +11,7 @@ const cors = require('cors');
 // Import Routes
 const authRoute = require('./routes/authRoute');
 const postRoute = require('./routes/postRoute');
+const commentRoute = require('./routes/commentRoute');
 
 const {errorHandler} = require('./middlewares/errorHandler');
 
@@ -25,6 +26,7 @@ app.use(express.json());
 // Mount the route
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/posts', postRoute);
+app.use('/api/v1/comments', commentRoute);
 
 // Unhandler Route
 app.all('*', (req, res, next) => {

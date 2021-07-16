@@ -5,7 +5,7 @@ const {verifyToken} = require('./../middlewares/verifyToken')
 
 const Router = express.Router();
 
-Router.route('/').get(getAllPosts).post(verifyToken, createOnePost);
+Router.route('/').get(verifyToken, getAllPosts).post(verifyToken, createOnePost);
 Router.route('/:postId').put(verifyToken, updateOnePost).delete(verifyToken, deleteOnePost);
 
 Router.route('/count/:postId').get(verifyToken, getCountLike);

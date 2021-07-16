@@ -7,11 +7,16 @@ import AppContext from './AppContext';
 export default function PostList() {
   const { state, dispatch } = useContext(AppContext);
   const { posts, user } = state;
-  const getAllPosts = useCallback(async ()=> {
+  
+  const getAllPosts = useCallback(async () => {
+    const token = localStorage.getItem("token");
     try {
       const option = {
         method: "get",
         url: "/api/v1/posts",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
       const response = await axios(option);
       const posts = response.data.data.posts;
@@ -20,10 +25,6 @@ export default function PostList() {
       console.log(error);
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    getAllPosts();
-  }, [getAllPosts]);
 
   const newPosts = posts.map((post) => {
     if (user) {
@@ -35,6 +36,9 @@ export default function PostList() {
     }
   });
 
+  useEffect(() => {
+    getAllPosts();
+  }, [getAllPosts]);
   
   return (
     <section className="post-section">

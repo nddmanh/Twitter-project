@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import AppContext from './AppContext';
+import CommentList from './CommentList';
 
 export default function PostItem({ post }) {
   const { state, dispatch } = useContext(AppContext);
@@ -10,7 +11,7 @@ export default function PostItem({ post }) {
   const [openEditForm, setOpenEditForm] = useState(false);
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
   const [countLike, setCountLike] = useState('');
-  const [isLike, setIsLike] = useState('')
+  const [isLike, setIsLike] = useState('');
 
   const updatePost = async () => {
     try {
@@ -79,10 +80,6 @@ export default function PostItem({ post }) {
     }
   }, [post._id, user.userId]);
 
-  useEffect(() => {
-    getCountLike();
-  }, [getCountLike]);
-
   const handleLikePost = useCallback(async ()=> {
     const token = localStorage.getItem("token");
     try {
@@ -121,6 +118,12 @@ export default function PostItem({ post }) {
     }
   }, [post._id, user.userId]);
 
+  useEffect(() => {
+    getCountLike();
+    handleLikePost();
+    handleUnlikePost();
+  }, [getCountLike, handleLikePost, handleUnlikePost]);
+
   let date = new Date(post.createdAt);
   return (
     <div className="post-item">
@@ -158,7 +161,7 @@ export default function PostItem({ post }) {
           </div>
         )}
       </div>
-      {openEditForm && (
+      {openEditForm ? (
         <div className="post-edit-form">
           <form className="edit-form">
             <textarea
@@ -182,8 +185,11 @@ export default function PostItem({ post }) {
             </div>
           </form>
         </div>
+      ) : (
+        <CommentList postId={post._id} />
       )}
-      
+
     </div>
+    
   )
 }

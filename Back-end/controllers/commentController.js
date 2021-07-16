@@ -3,7 +3,8 @@ const Comment = require('./../models/Comment');
 // Get all Comment
 exports.getAllComments = async (req, res, next) => {
     try {
-        const comments = await Comment.find({}).populate('author', 'name').select('content createdAt');
+        // const {postId} = req.params;
+        const comments = await Comment.find({ }).populate('author', 'name').select('contentCmt post createdAt');
         res.status(200).json({
             status: 'success',
             result: comments.length,
@@ -18,7 +19,8 @@ exports.getAllComments = async (req, res, next) => {
 exports.createOneComment = async (req, res, next) => {
     try {
         const {userId} = req.user;
-        const comment = await Comment.create({...req.body, author: userId});
+        const {postId} = req.params;
+        const comment = await Comment.create({...req.body, author: userId, post: postId});
         res.status(200).json({
             status: 'success',
             data: { comment }

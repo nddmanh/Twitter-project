@@ -9,7 +9,7 @@ import AppContext from "./components/AppContext";
 import axios from "axios";
 
 function App() {
-  const initialState = {user: null, posts: []};
+  const initialState = {user: null, posts: [], comments: []};
   const [state, dispatch] = useReducer(AppReducer, initialState );
   const checkCurrentUser = useCallback(async () => {
     try {
@@ -31,9 +31,28 @@ function App() {
     }
   }, [dispatch]);
 
+  const getAllComments = useCallback(async ()=> {
+    const token = localStorage.getItem("token");
+    try {
+      const option = {
+        method: "get",
+        url: `/api/v1/comments`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      const response = await axios(option);
+      const comments = response.data.data.comments;
+      dispatch({ type: "GET_ALL_COMMENTS", payload: comments });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch]);
+
   useEffect(() => {
     checkCurrentUser();
-  }, [checkCurrentUser])
+    getAllComments();
+  }, [checkCurrentUser, getAllComments])
 
   return (
     <Router>
@@ -41,17 +60,27 @@ function App() {
         <div className="container">
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Main />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/register">
-              <Register />
-            </Route>
+
+            { state.user ? (
+              <Route exact path="/">
+                <Main />
+              </Route>
+            ) : (
+              <>
+                <Route exact path="/">
+                  <h4 style={{ textAlign: "center"}}>Please login or register!</h4>
+                </Route>
+                <Route exact path="/login">
+                  <Login />
+                </Route>
+                <Route exact path="/register">
+                  <Register />
+                </Route>
+              </>
+            )}
+  
             <Route exact path="*">
-              <div> Page not found! </div>
+              <h4 style={{ textAlign: "center"}}>Page not found!</h4>
             </Route>
           </Switch>
         </div>
