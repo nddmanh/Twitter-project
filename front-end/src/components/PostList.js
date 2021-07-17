@@ -43,7 +43,7 @@ export default function PostList() {
   return (
     <section className="post-section">
       <div className="post-list">
-        {newPosts.map((post) => (
+        {newPosts.reverse().map((post) => (
           <PostItem post={post} key={post._id} />
         ))}
       </div>

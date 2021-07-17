@@ -13,6 +13,72 @@ export default function PostItem({ post }) {
   const [countLike, setCountLike] = useState('');
   const [isLike, setIsLike] = useState('');
 
+  const checkUserLike = (usersLiked, user) => {
+    return usersLiked.find(userLiked => userLiked === user);
+  }
+
+  const getCountLike = useCallback(async ()=> {
+    const token = localStorage.getItem("token");
+    try {
+      const option = {
+        method: "get",
+        url: `/api/v1/posts/count/${post._id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      const response = await axios(option);
+      const usersLiked = response.data.data.userLike;
+      const numLike = response.data.data.userLike.length;
+      setCountLike(numLike);
+      checkUserLike(usersLiked, user.userId) ? setIsLike(true) : setIsLike(false); 
+    } catch (error) {
+      console.log(error);
+    }
+  }, [post._id, user.userId]);
+
+  const handleLikePost = useCallback(async ()=> {
+    const token = localStorage.getItem("token");
+    try {
+      const option = {
+        method: "get",
+        url: `/api/v1/posts/like/${post._id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      const response = await axios(option);
+      const usersLiked = response.data.data.post.userIdLike;
+      setCountLike(usersLiked.length);
+      setIsLike(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [post._id]);
+  
+  const handleUnlikePost = useCallback(async ()=> {
+    const token = localStorage.getItem("token");
+    try {
+      const option = {
+        method: "get",
+        url: `/api/v1/posts/unlike/${post._id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      const response = await axios(option);
+      const usersLiked = response.data.data.post.userIdLike;
+      setCountLike(usersLiked.length);
+      setIsLike(false); 
+    } catch (error) {
+      console.log(error);
+    }
+  }, [post._id]);
+
+  useEffect(() => {
+    getCountLike();
+  }, [getCountLike]);
+
   const updatePost = async () => {
     try {
       setOpenEditForm(false);
@@ -56,83 +122,15 @@ export default function PostItem({ post }) {
     }
   };
 
-  const checkUserLike = (usersLiked, user) => {
-    return usersLiked.find(userLiked => userLiked === user);
-  }
-
-  const getCountLike = useCallback(async ()=> {
-    const token = localStorage.getItem("token");
-    try {
-      const option = {
-        method: "get",
-        url: `/api/v1/posts/count/${post._id}`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-      const response = await axios(option);
-      const usersLiked = response.data.data.userLike;
-      const numLike = response.data.data.userLike.length;
-      setCountLike(numLike);
-      checkUserLike(usersLiked, user.userId) ? setIsLike(true) : setIsLike(false); 
-    } catch (error) {
-      console.log(error);
-    }
-  }, [post._id, user.userId]);
-
-  const handleLikePost = useCallback(async ()=> {
-    const token = localStorage.getItem("token");
-    try {
-      const option = {
-        method: "get",
-        url: `/api/v1/posts/like/${post._id}`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-      const response = await axios(option);
-      const usersLiked = response.data.data.post.userIdLike;
-      setCountLike(usersLiked.length);
-      checkUserLike(usersLiked, user.userId) ? setIsLike(true) : setIsLike(false); 
-    } catch (error) {
-      console.log(error);
-    }
-  }, [post._id, user.userId]);
-  
-  const handleUnlikePost = useCallback(async ()=> {
-    const token = localStorage.getItem("token");
-    try {
-      const option = {
-        method: "get",
-        url: `/api/v1/posts/unlike/${post._id}`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-      const response = await axios(option);
-      const usersLiked = response.data.data.post.userIdLike;
-      setCountLike(usersLiked.length);
-      checkUserLike(usersLiked, user.userId) ? setIsLike(true) : setIsLike(false); 
-    } catch (error) {
-      console.log(error);
-    }
-  }, [post._id, user.userId]);
-
-  useEffect(() => {
-    getCountLike();
-    handleLikePost();
-    handleUnlikePost();
-  }, [getCountLike, handleLikePost, handleUnlikePost]);
-
   let date = new Date(post.createdAt);
   return (
     <div className="post-item">
       <p className="post-content">{post.content}</p>
 
       {isLike ? (
-        <button id="btn-like" className="btn-react-active" type="button" onClick={() => handleUnlikePost()} > <span>{countLike} Like </span> </button>
+        <button id="btn-like" className="btn-react-active" onClick={() => handleUnlikePost()} > <span>{countLike} Like </span> </button>
       ) : (
-        <button id="btn-like" className="btn-react " type="button" onClick={() => handleLikePost()} > <span>{countLike} Like</span> </button>
+        <button id="btn-like" className="btn-react " onClick={() => handleLikePost()} > <span>{countLike} Like</span> </button>
       )}
 
       <div className="post-footer">

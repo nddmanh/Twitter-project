@@ -3,7 +3,6 @@ const Comment = require('./../models/Comment');
 // Get all Comment
 exports.getAllComments = async (req, res, next) => {
     try {
-        // const {postId} = req.params;
         const comments = await Comment.find({ }).populate('author', 'name').select('contentCmt post createdAt');
         res.status(200).json({
             status: 'success',

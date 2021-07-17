@@ -12,5 +12,4 @@ Router.route('/count/:postId').get(verifyToken, getCountLike);
 Router.route('/like/:postId').get(verifyToken, likeOnePost);
 Router.route('/unlike/:postId').get(verifyToken, unlikeOnePost);
 
-
 module.exports = Router;

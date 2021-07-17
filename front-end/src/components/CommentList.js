@@ -67,7 +67,7 @@ export default function CommentList({ postId }) {
         </form>
         
         <div>
-          {userComments.map((comment) => (
+          {userComments.reverse().map((comment) => (
             <CommentItem comment={comment} key={comment._id} />
           ))}
         </div>
