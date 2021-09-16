@@ -35,8 +35,7 @@ export default function CommentList({ postId }) {
       };
       const response = await axios(option);
       const { comment } = response.data.data;
-      const author = {_id: comment.author, name: user.userName }
-      console.log(author);
+      const author = { _id: comment.author, name: user.userName }
       dispatch({
         type: "CREATE_ONE_COMMENT",
         payload: { ...comment, author, isEditable: true },
