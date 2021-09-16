@@ -5,6 +5,7 @@ import AppContext from './AppContext';
 import { useHistory } from 'react-router';
 import { apiUrl } from "./../contexts/constant";
 
+
 export default function Register() {
   const { dispatch } = useContext(AppContext);
   const [userInput, setUserInput] = useState({
