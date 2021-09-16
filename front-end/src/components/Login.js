@@ -3,6 +3,7 @@ import './../css/Auth.css';
 import axios from 'axios';
 import AppContext from './AppContext';
 import { useHistory } from 'react-router';
+import { apiUrl } from "./../contexts/constant";
 
 export default function Login() {
   const { dispatch } = useContext(AppContext);
@@ -17,7 +18,7 @@ export default function Login() {
       e.preventDefault();
       const option = {
         method: "post",
-        url: "/api/v1/auth/login",
+        url: `${apiUrl}/api/v1/auth/login`,
         data: userInput,
       }
       const response = await axios(option);

@@ -1,6 +1,8 @@
 import { React, useContext} from 'react';
 import axios from "axios";
 import AppContext from './AppContext';
+import { apiUrl } from "./../contexts/constant";
+
 
 export default function CommentItem({ comment }) {
   const { dispatch } = useContext(AppContext);
@@ -9,7 +11,7 @@ export default function CommentItem({ comment }) {
       const token = localStorage.getItem("token");
       const option = {
         method: "delete",
-        url: `/api/v1/comments/${comment._id}`,
+        url: `${apiUrl}/api/v1/comments/${comment._id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

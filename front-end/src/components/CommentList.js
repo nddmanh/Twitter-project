@@ -2,6 +2,7 @@ import { React, useCallback, useContext, useEffect, useState } from 'react';
 import axios from "axios";
 import AppContext from './AppContext';
 import CommentItem from './CommentItem';
+import { apiUrl } from "./../contexts/constant";
 
 export default function CommentList({ postId }) {
   const { state, dispatch } = useContext(AppContext);
@@ -26,7 +27,7 @@ export default function CommentList({ postId }) {
       const token = localStorage.getItem("token");
       const option = {
         method: "post",
-        url: `/api/v1/comments/${postId}`,
+        url: `${apiUrl}/api/v1/comments/${postId}`,
         data: commentInput,
         headers: {
           Authorization: `Bearer ${token}`,

@@ -3,6 +3,7 @@ import './../css/Post.css';
 import PostItem from './PostItem';
 import axios from "axios";
 import AppContext from './AppContext';
+import { apiUrl } from "./../contexts/constant";
 
 export default function PostList() {
   const { state, dispatch } = useContext(AppContext);
@@ -13,7 +14,7 @@ export default function PostList() {
     try {
       const option = {
         method: "get",
-        url: "/api/v1/posts",
+        url: `${apiUrl}/api/v1/posts`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

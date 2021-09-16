@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import AppContext from './AppContext';
 import CommentList from './CommentList';
+import { apiUrl } from "./../contexts/constant";
 
 export default function PostItem({ post }) {
   const { state, dispatch } = useContext(AppContext);
@@ -22,7 +23,7 @@ export default function PostItem({ post }) {
     try {
       const option = {
         method: "get",
-        url: `/api/v1/posts/count/${post._id}`,
+        url: `${apiUrl}/api/v1/posts/count/${post._id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -42,7 +43,7 @@ export default function PostItem({ post }) {
     try {
       const option = {
         method: "get",
-        url: `/api/v1/posts/like/${post._id}`,
+        url: `${apiUrl}/api/v1/posts/like/${post._id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -61,7 +62,7 @@ export default function PostItem({ post }) {
     try {
       const option = {
         method: "get",
-        url: `/api/v1/posts/unlike/${post._id}`,
+        url: `${apiUrl}/api/v1/posts/unlike/${post._id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -85,7 +86,7 @@ export default function PostItem({ post }) {
       const token = localStorage.getItem("token");
       const option = {
         method: "put",
-        url: `/api/v1/posts/${post._id}`,
+        url: `${apiUrl}/api/v1/posts/${post._id}`,
         data: postToEdit,
         headers: {
           Authorization: `Bearer ${token}`,
@@ -107,7 +108,7 @@ export default function PostItem({ post }) {
       const token = localStorage.getItem("token");
       const option = {
         method: "delete",
-        url: `/api/v1/posts/${post._id}`,
+        url: `${apiUrl}/api/v1/posts/${post._id}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

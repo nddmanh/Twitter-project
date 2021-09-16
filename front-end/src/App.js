@@ -7,16 +7,18 @@ import AppReducer from "./reducers/AppReducers";
 import React, { useCallback, useEffect, useReducer } from "react";
 import AppContext from "./components/AppContext";
 import axios from "axios";
+import { apiUrl } from "./contexts/constant";
 
 function App() {
   const initialState = {user: null, posts: [], comments: []};
   const [state, dispatch] = useReducer(AppReducer, initialState );
+  const token = localStorage.getItem("token");
+
   const checkCurrentUser = useCallback(async () => {
     try {
-      const token = localStorage.getItem("token");
       const option = {
         method: "get",
-        url: "api/v1/auth",
+        url: `${apiUrl}/api/v1/auth`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -29,14 +31,14 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   const getAllComments = useCallback(async ()=> {
     const token = localStorage.getItem("token");
     try {
       const option = {
         method: "get",
-        url: `/api/v1/comments`,
+        url: `${apiUrl}/api/v1/comments`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,8 +53,10 @@ function App() {
 
   useEffect(() => {
     checkCurrentUser();
-    getAllComments();
-  }, [checkCurrentUser, getAllComments])
+    if (token) {
+      getAllComments();
+    }
+  }, [checkCurrentUser, getAllComments, token])
 
   return (
     <Router>

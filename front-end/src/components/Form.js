@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import './../css/Form.css';
 import axios from 'axios';
 import AppContext from './AppContext';
+import { apiUrl } from "./../contexts/constant";
 
 export default function Form() {
   const { state, dispatch } = useContext(AppContext);
@@ -15,7 +16,7 @@ export default function Form() {
       const token = localStorage.getItem("token");
       const option = {
         method: "post",
-        url: "/api/v1/posts/",
+        url: `${apiUrl}/api/v1/posts/`,
         data: postInput,
         headers: {
           Authorization: `Bearer ${token}`,

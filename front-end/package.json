@@ -1,7 +1,6 @@
 {
   "name": "front-end",
   "version": "0.1.0",
-  "proxy": "https://twitter-app-api.herokuapp.com",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
