@@ -50,7 +50,7 @@ export default function CommentList({ postId }) {
   return (
     <div className="comment">
         <form className="form-comment" onSubmit={onSubmitHandleCmt} >
-          <span>Duc Manh</span>
+          <span> {state.user.userName} </span>
           <input 
             name="contentCmt"
             type="text" 
